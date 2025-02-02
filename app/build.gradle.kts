@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.hilt.gradle)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -41,7 +42,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
-        compose = true
+        buildConfig = true
     }
     composeCompiler {
         enableStrongSkippingMode = true
@@ -70,15 +71,27 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation (libs.dagger.hilt.android)
     ksp (libs.dagger.hilt.compiler)
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation(libs.retrofit)
     implementation(libs.okhttp)
-    implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
     implementation(libs.lottie.compose)
     implementation(libs.coil.compose)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.timber)
-    implementation(libs.gson)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.converter.kotlinx.serialization)
     implementation(libs.androidx.material3)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation (libs.kotlinx.coroutines.android)
+//    implementation (libs.androidx.lifecycle.extensions)
+//    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+//    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+
+//    implementation("com.github.haroldadmin:NetworkResponseAdapter:5.0.0")
 }
