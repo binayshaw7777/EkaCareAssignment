@@ -10,13 +10,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.binayshaw7777.ekacareassignment.ui.screens.detail.DetailScreen
 import com.binayshaw7777.ekacareassignment.ui.screens.home.HomeScreen
 import com.binayshaw7777.ekacareassignment.ui.screens.saved.SavedScreen
@@ -29,7 +32,7 @@ fun Navigation() {
     val backStackEntry = navController.currentBackStackEntryAsState()
 
     val screensWithoutNavBar = listOf(
-        Screens.Detail.route
+        "${Screens.Detail.route}/{newsUrl}"
     )
 
     Scaffold(
@@ -55,7 +58,7 @@ fun Navigation() {
             composable(
                 route = Screens.Home.route
             ) {
-                HomeScreen()
+                HomeScreen(navController = navController, viewModel = hiltViewModel())
             }
 
             composable(
@@ -65,11 +68,13 @@ fun Navigation() {
             }
 
             composable(
-                route = Screens.Detail.route
-            ) {
-                DetailScreen()
+                route = "${Screens.Detail.route}/{newsUrl}",
+                arguments = listOf(navArgument("newsUrl") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val newsUrl =
+                    backStackEntry.arguments?.getString("newsUrl") ?: "https://www.google.com"
+                DetailScreen(newsUrl = newsUrl)
             }
-
         }
     }
 }

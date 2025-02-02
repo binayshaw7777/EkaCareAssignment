@@ -27,7 +27,7 @@ suspend fun <T : Any> handleApi(
 suspend fun <T : Any> handleApiFlow(
     execute: suspend () -> Response<T>
 ): Flow<NetworkResult<T>> = flow {
-    emit(NetworkResult.Loading())  // Emit loading state before API call
+//    emit(NetworkResult.Loading())  // Emit loading state before API call
     try {
         val response = execute()
         val body = response.body()

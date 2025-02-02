@@ -39,7 +39,7 @@ fun ArticleCardItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(vertical = 4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -64,12 +64,12 @@ fun ArticleCardItem(
                 contentDescription = "Article Image"
             )
 
-            Column() {
+            Column {
                 Text(
                     text = article.title ?: "",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 2,
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -80,15 +80,14 @@ fun ArticleCardItem(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
-                Spacer(modifier = Modifier.height(12.dp))
-
+                Spacer(Modifier.height(4.dp))
                 Text(
                     text = "Read More",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
-                        .fillMaxWidth()
                         .align(Alignment.End)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                         .clickable { onReadMore() }
                 )
             }

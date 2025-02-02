@@ -23,6 +23,9 @@ class HomeViewModel @Inject constructor(private val repository: NewsApiRepositor
         private set
 
     fun getNews(query: String = "Bitcoin") = viewModelScope.launch(Dispatchers.IO) {
+        if (articles.value.isEmpty()) {
+            newsResponse.emit(NetworkResult.Loading())
+        }
         repository.getNewsByQuery(query).collect { response ->
             newsResponse.emit(response)
             when (response) {
@@ -38,6 +41,7 @@ class HomeViewModel @Inject constructor(private val repository: NewsApiRepositor
                 is NetworkResult.Loading -> {
                     Timber.d("API call is loading")
                 }
+
                 is NetworkResult.Exception -> {
                     Timber.d("API call was failed due to exception: ${response.e}")
                 }
