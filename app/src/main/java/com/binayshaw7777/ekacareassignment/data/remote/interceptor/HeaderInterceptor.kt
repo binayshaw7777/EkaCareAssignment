@@ -19,6 +19,4 @@ class HeaderInterceptor @Inject constructor() : Interceptor {
             .build()
         return chain.proceed(request)
     }
-
-
 }

@@ -83,15 +83,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.converter.kotlinx.serialization)
     implementation(libs.androidx.material3)
-
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
     implementation (libs.kotlinx.coroutines.android)
-//    implementation (libs.androidx.lifecycle.extensions)
-//    implementation (libs.androidx.lifecycle.viewmodel.ktx)
-//    implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
-
-//    implementation("com.github.haroldadmin:NetworkResponseAdapter:5.0.0")
 }
