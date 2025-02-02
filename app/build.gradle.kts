@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.hilt.gradle)
 }
 
 android {
@@ -16,6 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -25,6 +28,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            isDebuggable = true
         }
     }
     compileOptions {
@@ -36,6 +42,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
 }
 
@@ -56,4 +65,20 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation (libs.dagger.hilt.android)
+    ksp (libs.dagger.hilt.compiler)
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+    implementation(libs.lottie.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.timber)
+    implementation(libs.gson)
+    implementation(libs.androidx.material3)
 }
