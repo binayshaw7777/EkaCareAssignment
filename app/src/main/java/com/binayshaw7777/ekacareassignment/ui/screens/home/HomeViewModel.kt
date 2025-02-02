@@ -2,7 +2,7 @@ package com.binayshaw7777.ekacareassignment.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.binayshaw7777.ekacareassignment.data.remote.response.Articles
+import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.data.remote.response.NewsResponse
 import com.binayshaw7777.ekacareassignment.domain.repository.NewsApiRepository
 import com.binayshaw7777.ekacareassignment.utils.NetworkResult
@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(private val repository: NewsApiRepositor
     var newsResponse = MutableStateFlow<NetworkResult<NewsResponse>>(NetworkResult.Clear())
         private set
 
-    var articles = MutableStateFlow<List<Articles>>(emptyList())
+    var articles = MutableStateFlow<List<Article>>(emptyList())
         private set
 
     fun getNews(query: String = "Bitcoin") = viewModelScope.launch(Dispatchers.IO) {

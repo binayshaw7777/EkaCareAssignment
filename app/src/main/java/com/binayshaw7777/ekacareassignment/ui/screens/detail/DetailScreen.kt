@@ -16,13 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import timber.log.Timber
 
 @Composable
-fun DetailScreen(modifier: Modifier = Modifier, newsUrl: String) {
+fun DetailScreen(modifier: Modifier = Modifier, article: Article) {
 
     LaunchedEffect(Unit) {
-        Timber.d("Url passed is: $newsUrl")
+        Timber.d("Article Passed: $article")
     }
 
     Scaffold(
@@ -40,7 +41,7 @@ fun DetailScreen(modifier: Modifier = Modifier, newsUrl: String) {
             }
         }
     ) { paddingValues ->
-        WebView(newsUrl = newsUrl, paddingValues)
+        WebView(newsUrl = article.url ?: "https://google.com", paddingValues)
     }
 }
 

@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.binayshaw7777.ekacareassignment.R
-import com.binayshaw7777.ekacareassignment.data.remote.response.Articles
+import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 
 @Composable
 fun ArticleCardItem(
-    article: Articles,
+    article: Article,
     onReadMore: () -> Unit
 ) {
     val context = LocalContext.current

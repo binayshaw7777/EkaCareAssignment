@@ -12,19 +12,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.ui.components.ArticleCardItem
-import com.binayshaw7777.ekacareassignment.ui.navigation.Screens
 import com.binayshaw7777.ekacareassignment.ui.screens.home.component.HomeScreenShimmerState
 import com.binayshaw7777.ekacareassignment.utils.NetworkResult
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navController: NavController,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    onArticleClick: (Article) -> Unit
 ) {
 
     val newsResponse by viewModel.newsResponse.collectAsState()
@@ -50,8 +47,7 @@ fun HomeScreen(
                     ) {
                         items(articles) { item ->
                             ArticleCardItem(article = item) {
-                                val encodedUrl = URLEncoder.encode(item.url, StandardCharsets.UTF_8.toString())
-                                navController.navigate("${Screens.Detail.route}/$encodedUrl")
+                                onArticleClick(item)
                             }
                         }
                     }

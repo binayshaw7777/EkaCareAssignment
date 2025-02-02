@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class NewsResponse(
     @SerialName("status") var status: String? = null,
     @SerialName("totalResults") var totalResults: Int? = null,
-    @SerialName("articles") var articles: List<Articles> = emptyList()
+    @SerialName("articles") var articles: List<Article> = emptyList()
 )
 
 @Serializable
@@ -17,7 +17,7 @@ data class Source(
 )
 
 @Serializable
-data class Articles(
+data class Article(
     @SerialName("source") var source: Source? = null,
     @SerialName("author") var author: String? = null,
     @SerialName("title") var title: String? = null,
