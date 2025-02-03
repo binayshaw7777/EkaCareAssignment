@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(private val repository: NewsApiRepositor
     var articles = MutableStateFlow<List<Article>>(emptyList())
         private set
 
-    fun getNews(query: String = "Bitcoin") = viewModelScope.launch(Dispatchers.IO) {
+    fun getNews(query: String = "AI") = viewModelScope.launch(Dispatchers.IO) {
         if (articles.value.isEmpty()) {
             newsResponse.emit(NetworkResult.Loading())
         }

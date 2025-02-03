@@ -23,6 +23,7 @@ import androidx.navigation.navArgument
 import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.ui.screens.detail.DetailScreen
 import com.binayshaw7777.ekacareassignment.ui.screens.home.HomeScreen
+import com.binayshaw7777.ekacareassignment.ui.screens.saved.ArticleViewModel
 import com.binayshaw7777.ekacareassignment.ui.screens.saved.SavedScreen
 import com.binayshaw7777.ekacareassignment.utils.FadeIn
 import com.binayshaw7777.ekacareassignment.utils.FadeOut
@@ -30,7 +31,9 @@ import kotlinx.serialization.json.Json
 import java.net.URLDecoder
 
 @Composable
-fun Navigation() {
+fun Navigation(
+    articleViewModel: ArticleViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
     val backStackEntry = navController.currentBackStackEntryAsState()
 
@@ -69,7 +72,9 @@ fun Navigation() {
             composable(
                 route = Screens.Saved.route
             ) {
-                SavedScreen()
+                SavedScreen(viewModel = articleViewModel) { article: Article ->
+                    navController.navigate(Screens.Detail.createRoute(article))
+                }
             }
 
             composable(
@@ -79,7 +84,15 @@ fun Navigation() {
                 val json = backStackEntry.arguments?.getString("article")
                 val article =
                     json?.let { Json.decodeFromString<Article>(URLDecoder.decode(it, "UTF-8")) }
-                article?.let { DetailScreen(article = it) }
+                article?.let {
+                    DetailScreen(
+                        article = it,
+                        viewModel = articleViewModel,
+                        onBackPress = {
+                            navController.popBackStack()
+                        }
+                    )
+                }
             }
         }
     }
