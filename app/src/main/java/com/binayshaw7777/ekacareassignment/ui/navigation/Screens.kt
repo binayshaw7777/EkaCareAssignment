@@ -3,7 +3,6 @@ package com.binayshaw7777.ekacareassignment.ui.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -39,7 +38,7 @@ data class BottomNavItem(
                 route = Screens.Home.route,
             ),
             BottomNavItem(
-                label = "Search",
+                label = "Saved",
                 selectedIcon = Icons.Filled.Bookmark,
                 unselectedIcon = Icons.Outlined.BookmarkBorder,
                 route = Screens.Saved.route

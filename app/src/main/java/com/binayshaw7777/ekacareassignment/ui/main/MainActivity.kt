@@ -1,4 +1,4 @@
-package com.binayshaw7777.ekacareassignment
+package com.binayshaw7777.ekacareassignment.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
