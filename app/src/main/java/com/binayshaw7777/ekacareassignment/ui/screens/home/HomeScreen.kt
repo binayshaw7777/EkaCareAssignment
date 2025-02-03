@@ -1,11 +1,18 @@
 package com.binayshaw7777.ekacareassignment.ui.screens.home
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -20,9 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.binayshaw7777.ekacareassignment.data.remote.response.Article
+import com.binayshaw7777.ekacareassignment.domain.model.ChipItem
 import com.binayshaw7777.ekacareassignment.ui.components.ArticleCardItem
 import com.binayshaw7777.ekacareassignment.ui.screens.home.component.HomeScreenShimmerState
 import com.binayshaw7777.ekacareassignment.utils.NetworkResult
+import com.binayshaw7777.ekacareassignment.utils.Utils
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -43,13 +52,45 @@ fun HomeScreen(
     val pullRefreshState = rememberPullToRefreshState()
     var isRefreshing by remember { mutableStateOf(false) }
 
+    var selectedChip by remember { mutableStateOf<ChipItem?>(null) }
+    val chipItems by remember { mutableStateOf(Utils.getChipItems()) }
+
+
     LaunchedEffect(Unit) {
         if (articles.isEmpty()) {
             viewModel.getNews()
         }
     }
 
+    LaunchedEffect(selectedChip) {
+        selectedChip?.let {
+            viewModel.getNews(query = it.label)
+        }
+    }
+
     Column(modifier = Modifier.then(modifier)) {
+
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(chipItems) { chip ->
+                FilterChip(
+                    selected = selectedChip?.id == chip.id,
+                    onClick = {
+                        selectedChip = if (selectedChip?.id == chip.id) null else chip
+                        if (selectedChip == null) {
+                            viewModel.getNews(query = chipItems[0].label)
+                        }
+                    },
+                    label = { Text(chip.label) },
+                    shape = RoundedCornerShape(100.dp)
+                )
+            }
+        }
+
+        Spacer(Modifier.height(4.dp))
+
 
         when (newsResponse) {
             is NetworkResult.Loading -> {

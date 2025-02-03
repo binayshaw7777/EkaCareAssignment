@@ -5,6 +5,7 @@ import android.content.Intent
 import com.binayshaw7777.ekacareassignment.BuildConfig
 import com.binayshaw7777.ekacareassignment.data.local.model.ArticleEntity
 import com.binayshaw7777.ekacareassignment.data.remote.response.Article
+import com.binayshaw7777.ekacareassignment.domain.model.ChipItem
 
 
 object Utils {
@@ -26,5 +27,35 @@ object Utils {
             url = this.url,
             urlToImage = this.urlToImage
         )
+    }
+    val trendingTopics = listOf(
+        "AI",
+        "Bitcoin",
+        "Climate Change",
+        "Space Travel",
+        "Quantum Computing",
+        "Electric Vehicles",
+        "Digital Privacy",
+        "Cyber Security",
+        "Remote Work",
+        "Clean Energy",
+        "Tech Layoffs",
+        "Cloud Computing",
+        "Space Tourism",
+        "Machine Learning",
+        "Smart Cities",
+        "Data Privacy",
+        "Green Tech",
+        "Web3",
+        "Metaverse",
+        "Supply Chain"
+    )
+
+    fun getChipItems(): List<ChipItem> {
+        val items = mutableListOf<ChipItem>()
+        trendingTopics.forEachIndexed { index, item ->
+            items.add(ChipItem(index, item))
+        }
+        return items
     }
 }
