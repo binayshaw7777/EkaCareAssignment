@@ -1,11 +1,13 @@
 package com.binayshaw7777.ekacareassignment.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import com.binayshaw7777.ekacareassignment.BuildConfig
 import com.binayshaw7777.ekacareassignment.data.local.model.ArticleEntity
 import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.domain.model.ChipItem
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 object Utils {
@@ -14,7 +16,7 @@ object Utils {
         sendIntent.setAction(Intent.ACTION_SEND)
         sendIntent.putExtra(
             Intent.EXTRA_TEXT,
-            "Hey check out this article: $articleUrl" + BuildConfig.APPLICATION_ID
+            "Hey check out this article: $articleUrl"
         )
         sendIntent.setType("text/plain")
         startActivity(sendIntent)
@@ -57,5 +59,10 @@ object Utils {
             items.add(ChipItem(index, item))
         }
         return items
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun Long.dateFormatter(): String {
+        return SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Date(this)).toString()
     }
 }

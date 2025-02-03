@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -82,13 +85,13 @@ fun HomeScreen(
     }
 
     Column(
-        modifier = Modifier
-            .padding(4.dp)
-            .then(modifier)
+        modifier = Modifier.then(modifier)
     ) {
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End
         ) {
@@ -151,9 +154,13 @@ fun HomeScreen(
                             contentPadding = PaddingValues(8.dp)
                         ) {
                             items(articles) { item ->
-                                ArticleCardItem(article = item) {
-                                    onArticleClick(item)
-                                }
+                                ArticleCardItem(
+                                    articleTitle = item.title,
+                                    articleDescription = item.description,
+                                    articleUrl = item.url,
+                                    articleImageUrl = item.urlToImage,
+                                    onReadMore = { onArticleClick(item) }
+                                )
                             }
                         }
                     }

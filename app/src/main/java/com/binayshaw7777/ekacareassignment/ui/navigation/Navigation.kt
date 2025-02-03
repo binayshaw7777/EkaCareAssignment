@@ -1,5 +1,6 @@
 package com.binayshaw7777.ekacareassignment.ui.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -49,12 +51,13 @@ fun Navigation(
                 screensWithoutNavBar = screensWithoutNavBar,
                 navController = navController
             )
-        }
+        },
+        contentWindowInsets = WindowInsets(0.dp),
     ) { paddingValues ->
         NavHost(
             navController = navController,
             startDestination = Screens.Home.route,
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
             enterTransition = { FadeIn },
             exitTransition = { FadeOut },
             popEnterTransition = { FadeIn },
