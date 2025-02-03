@@ -1,4 +1,4 @@
-package com.binayshaw7777.ekacareassignment.utils
+package com.binayshaw7777.ekacareassignment.data.remote.network
 
 sealed class NetworkResult<T> {
     class Success<T: Any>(val data: T) : NetworkResult<T>()

@@ -44,7 +44,7 @@ import com.binayshaw7777.ekacareassignment.domain.model.ChipItem
 import com.binayshaw7777.ekacareassignment.ui.components.ArticleCardItem
 import com.binayshaw7777.ekacareassignment.ui.main.ThemeViewModel
 import com.binayshaw7777.ekacareassignment.ui.screens.home.component.HomeScreenShimmerState
-import com.binayshaw7777.ekacareassignment.utils.NetworkResult
+import com.binayshaw7777.ekacareassignment.data.remote.network.NetworkResult
 import com.binayshaw7777.ekacareassignment.utils.Utils
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

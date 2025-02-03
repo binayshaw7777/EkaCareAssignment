@@ -27,10 +27,11 @@ object Utils {
             title = this.title,
             description = this.description,
             url = this.url,
-            urlToImage = this.urlToImage
+            urlToImage = this.urlToImage,
+            author = this.author
         )
     }
-    val trendingTopics = listOf(
+    private val trendingTopics = listOf(
         "AI",
         "Bitcoin",
         "Climate Change",

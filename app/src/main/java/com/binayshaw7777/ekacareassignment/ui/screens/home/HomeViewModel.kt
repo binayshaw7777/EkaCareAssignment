@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.data.remote.response.NewsResponse
 import com.binayshaw7777.ekacareassignment.domain.repository.NewsApiRepository
-import com.binayshaw7777.ekacareassignment.utils.NetworkResult
+import com.binayshaw7777.ekacareassignment.data.remote.network.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

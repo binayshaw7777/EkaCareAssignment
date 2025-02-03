@@ -16,7 +16,8 @@ class ArticleRepositoryImpl @Inject constructor(
             title = article.title,
             description = article.description,
             url = article.url,
-            urlToImage = article.urlToImage
+            urlToImage = article.urlToImage,
+            author = article.author
         )
         return articleDao.insertArticle(toSave)
     }

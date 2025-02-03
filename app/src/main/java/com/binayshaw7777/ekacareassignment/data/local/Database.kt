@@ -9,7 +9,7 @@ import com.binayshaw7777.ekacareassignment.data.local.model.ArticleEntity
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 
-@Database(entities = [ArticleEntity::class], version = 2)
+@Database(entities = [ArticleEntity::class], version = 3)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun articleDao(): ArticleDao
 

@@ -13,5 +13,6 @@ data class ArticleEntity(
     @ColumnInfo(name = "description") val description: String?,
     @ColumnInfo(name = "url") val url: String?,
     @ColumnInfo(name = "url_to_image") val urlToImage: String?,
+    @ColumnInfo(name = "author") val author: String?,
     @ColumnInfo(name = "savedAt") val savedAt: Long = System.currentTimeMillis()
 )

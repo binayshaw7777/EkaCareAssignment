@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -27,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.ui.screens.saved.ArticleViewModel
+import com.binayshaw7777.ekacareassignment.utils.Utils.shareArticle
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,7 +70,17 @@ fun DetailScreen(
                     IconButton(onClick = onBackPress) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Back"
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {
+                        article.url?.let { context.shareArticle(it) }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Share,
+                            contentDescription = "Share"
                         )
                     }
                 },

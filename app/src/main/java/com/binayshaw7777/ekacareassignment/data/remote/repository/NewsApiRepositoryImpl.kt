@@ -4,7 +4,7 @@ import com.binayshaw7777.ekacareassignment.data.remote.ApiInterface
 import com.binayshaw7777.ekacareassignment.data.remote.network.handleApiFlow
 import com.binayshaw7777.ekacareassignment.data.remote.response.NewsResponse
 import com.binayshaw7777.ekacareassignment.domain.repository.NewsApiRepository
-import com.binayshaw7777.ekacareassignment.utils.NetworkResult
+import com.binayshaw7777.ekacareassignment.data.remote.network.NetworkResult
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
