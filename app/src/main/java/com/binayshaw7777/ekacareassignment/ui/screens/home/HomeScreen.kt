@@ -5,10 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -16,7 +23,10 @@ import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.ui.components.ArticleCardItem
 import com.binayshaw7777.ekacareassignment.ui.screens.home.component.HomeScreenShimmerState
 import com.binayshaw7777.ekacareassignment.utils.NetworkResult
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -28,9 +38,15 @@ fun HomeScreen(
     val articles by viewModel.articles.collectAsState()
 
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    val pullRefreshState = rememberPullToRefreshState()
+    var isRefreshing by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.getNews()
+        if (articles.isEmpty()) {
+            viewModel.getNews()
+        }
     }
 
     Column(modifier = Modifier.then(modifier)) {
@@ -42,12 +58,25 @@ fun HomeScreen(
 
             is NetworkResult.Success -> {
                 if (articles.isNotEmpty()) {
-                    LazyColumn(
-                        contentPadding = PaddingValues(8.dp)
+                    PullToRefreshBox(
+                        isRefreshing = isRefreshing,
+                        state = pullRefreshState,
+                        onRefresh = {
+                            isRefreshing = true
+                            scope.launch {
+                                delay(500)
+                                viewModel.getNews("Bitcoin")
+                                isRefreshing = false
+                            }
+                        }
                     ) {
-                        items(articles) { item ->
-                            ArticleCardItem(article = item) {
-                                onArticleClick(item)
+                        LazyColumn(
+                            contentPadding = PaddingValues(8.dp)
+                        ) {
+                            items(articles) { item ->
+                                ArticleCardItem(article = item) {
+                                    onArticleClick(item)
+                                }
                             }
                         }
                     }
