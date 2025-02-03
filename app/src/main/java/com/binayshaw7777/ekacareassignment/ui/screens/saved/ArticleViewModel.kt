@@ -1,5 +1,6 @@
 package com.binayshaw7777.ekacareassignment.ui.screens.saved
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.binayshaw7777.ekacareassignment.data.local.model.ArticleEntity
@@ -20,14 +21,21 @@ class ArticleViewModel @Inject constructor(
     val savedArticles: StateFlow<List<ArticleEntity>> = repository.getArticles()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    fun saveArticle(article: Article, onSave: (Long) -> Unit = {}) =
+    var savedRowIdLiveData = MutableLiveData<Long?>()
+        private set
+
+    fun saveArticle(article: Article) =
         viewModelScope.launch(Dispatchers.IO) {
             val savedRowId = repository.saveArticle(article = article)
-//            onSave(savedRowId)
+            savedRowIdLiveData.postValue(savedRowId)
         }
 
     fun deleteArticle(article: ArticleEntity, onDelete: (Boolean) -> Unit) = viewModelScope.launch {
         val success = repository.deleteArticle(article)
         onDelete(success)
+    }
+
+    fun clearSaveRowId() {
+        savedRowIdLiveData.value = null
     }
 }

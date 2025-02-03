@@ -3,6 +3,7 @@ package com.binayshaw7777.ekacareassignment.ui.screens.detail
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,9 +24,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import com.binayshaw7777.ekacareassignment.R
 import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.ui.screens.saved.ArticleViewModel
 import com.binayshaw7777.ekacareassignment.utils.Utils.shareArticle
@@ -43,17 +47,29 @@ fun DetailScreen(
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
+    val savedRowId by viewModel.savedRowIdLiveData.observeAsState()
+
 
     LaunchedEffect(Unit) {
+        viewModel.clearSaveRowId()
         Timber.d("Article Passed: $article")
+    }
+
+    LaunchedEffect(savedRowId) {
+        savedRowId?.let {
+            Toast.makeText(
+                context,
+                context.getString(R.string.article_was_saved_successfully),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-//            .then(modifier)
-        ,
+            .then(modifier),
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -91,13 +107,6 @@ fun DetailScreen(
             FloatingActionButton(
                 onClick = {
                     viewModel.saveArticle(article)
-//                    {
-//                        Toast.makeText(
-//                            context,
-//                            context.getString(R.string.article_was_saved_successfully),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
                 }
             ) {
                 Icon(imageVector = Icons.Filled.Bookmark, contentDescription = "Save")
