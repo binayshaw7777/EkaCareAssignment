@@ -58,7 +58,7 @@ fun HomeScreen(
 
     LaunchedEffect(Unit) {
         if (articles.isEmpty()) {
-            viewModel.getNews()
+            viewModel.getNews(chipItems[0].label)
         }
     }
 
@@ -106,7 +106,8 @@ fun HomeScreen(
                             isRefreshing = true
                             scope.launch {
                                 delay(500)
-                                viewModel.getNews("Bitcoin")
+                                val query = selectedChip?.label ?: chipItems[0].label
+                                viewModel.getNews(query)
                                 isRefreshing = false
                             }
                         }
