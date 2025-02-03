@@ -22,7 +22,7 @@ import com.binayshaw7777.ekacareassignment.ui.components.shimmerBrush
 
 @Composable
 fun HomeScreenShimmerState(modifier: Modifier = Modifier) {
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
+    LazyColumn(contentPadding = PaddingValues(8.dp)) {
         items(10) {
             ArticleCardShimmer()
         }

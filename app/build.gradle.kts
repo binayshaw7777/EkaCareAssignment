@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -20,6 +22,14 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        val apiKey = properties["API_KEY"] as String
+        require(apiKey.isNotEmpty()) {
+            "Register your api key from developer and place it in local.properties as `API_KEY`"
+        }
+        buildConfigField("String", "API_KEY", apiKey)
     }
 
     buildTypes {
@@ -71,13 +81,14 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation (libs.dagger.hilt.android)
     ksp (libs.dagger.hilt.compiler)
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.lottie.compose)
     implementation(libs.coil.compose)
     implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     implementation(libs.timber)
     implementation(libs.kotlinx.serialization.json)

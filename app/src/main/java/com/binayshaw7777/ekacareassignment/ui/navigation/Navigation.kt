@@ -20,19 +20,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.binayshaw7777.ekacareassignment.data.remote.response.Article
 import com.binayshaw7777.ekacareassignment.ui.screens.detail.DetailScreen
 import com.binayshaw7777.ekacareassignment.ui.screens.home.HomeScreen
+import com.binayshaw7777.ekacareassignment.ui.screens.saved.ArticleViewModel
 import com.binayshaw7777.ekacareassignment.ui.screens.saved.SavedScreen
 import com.binayshaw7777.ekacareassignment.utils.FadeIn
 import com.binayshaw7777.ekacareassignment.utils.FadeOut
+import kotlinx.serialization.json.Json
+import java.net.URLDecoder
 
 @Composable
-fun Navigation() {
+fun Navigation(
+    articleViewModel: ArticleViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
     val backStackEntry = navController.currentBackStackEntryAsState()
 
     val screensWithoutNavBar = listOf(
-        "${Screens.Detail.route}/{newsUrl}"
+        "${Screens.Detail.route}/{article}"
     )
 
     Scaffold(
@@ -58,22 +64,35 @@ fun Navigation() {
             composable(
                 route = Screens.Home.route
             ) {
-                HomeScreen(navController = navController, viewModel = hiltViewModel())
+                HomeScreen(viewModel = hiltViewModel()) { article: Article ->
+                    navController.navigate(Screens.Detail.createRoute(article))
+                }
             }
 
             composable(
                 route = Screens.Saved.route
             ) {
-                SavedScreen()
+                SavedScreen(viewModel = articleViewModel) { article: Article ->
+                    navController.navigate(Screens.Detail.createRoute(article))
+                }
             }
 
             composable(
-                route = "${Screens.Detail.route}/{newsUrl}",
-                arguments = listOf(navArgument("newsUrl") { type = NavType.StringType })
+                route = "${Screens.Detail.route}/{article}",
+                arguments = listOf(navArgument("article") { type = NavType.StringType })
             ) { backStackEntry ->
-                val newsUrl =
-                    backStackEntry.arguments?.getString("newsUrl") ?: "https://www.google.com"
-                DetailScreen(newsUrl = newsUrl)
+                val json = backStackEntry.arguments?.getString("article")
+                val article =
+                    json?.let { Json.decodeFromString<Article>(URLDecoder.decode(it, "UTF-8")) }
+                article?.let {
+                    DetailScreen(
+                        article = it,
+                        viewModel = articleViewModel,
+                        onBackPress = {
+                            navController.popBackStack()
+                        }
+                    )
+                }
             }
         }
     }
