@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -59,8 +58,7 @@ fun SavedArticleCardItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            .padding(4.dp)
     ) {
         Row(
             modifier = Modifier
